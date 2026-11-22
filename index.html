@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cruzadinha de Arquitetura Computacional</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== CABEÇALHO ===== -->
+  <header class="cabecalho">
+    <h1 class="titulo-jogo">Cruzadinha de <span>Arquitetura Computacional</span></h1>
+    <p class="subtitulo-jogo">Leia a dica, descubra a palavra e preencha o tabuleiro.</p>
+  </header>
+
+  <!-- ===== CORPO ===== -->
+  <main class="corpo">
+
+    <!-- Dicas, contador de acertos e vidas (fica em cima do tabuleiro) -->
+    <section class="painel-dicas">
+      <div class="caixa-dica">
+        <p class="dica-titulo" id="dica-titulo"></p>
+        <p class="dica-texto" id="dica-texto"></p>
+        <div class="botoes-dica">
+          <button type="button" class="botao botao-secundario" id="btn-anterior">Dica anterior</button>
+          <button type="button" class="botao botao-secundario" id="btn-proxima">Próxima dica</button>
+        </div>
+      </div>
+
+      <div class="placar">
+        <p class="placar-item" id="contador-acertos"></p>
+        <p class="placar-item" id="vidas"></p>
+      </div>
+    </section>
+
+    <!-- Tabuleiro e botões -->
+    <section class="area-jogo">
+      <table class="tabuleiro" id="tabuleiro" aria-label="Tabuleiro da cruzadinha"></table>
+
+      <div class="controles">
+        <button type="button" class="botao botao-principal" id="btn-conferir">Conferir</button>
+        <button type="button" class="botao botao-reiniciar" id="btn-reiniciar">Reiniciar</button>
+      </div>
+      <p class="resultado" id="resultado" aria-live="polite"></p>
+    </section>
+
+    <!-- Lista completa de pistas -->
+    <section class="listas-pistas">
+      <div class="coluna-pistas">
+        <h2>Horizontais</h2>
+        <ul id="lista-horizontal"></ul>
+      </div>
+      <div class="coluna-pistas">
+        <h2>Verticais</h2>
+        <ul id="lista-vertical"></ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Pop-up de alerta (vermelho para erro) -->
+  <div class="alerta oculto" id="alerta" role="alert"></div>
+
+  <!-- Tela final -->
+  <section class="tela-fim oculto" id="tela-fim">
+    <div class="caixa-fim">
+      <h2 id="fim-titulo"></h2>
+      <p id="fim-acertos"></p>
+      <p id="fim-aproveitamento"></p>
+      <button type="button" class="botao botao-principal" id="btn-jogar-novamente">Jogar novamente</button>
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <p>Atividade avaliativa · Arquitetura Computacional · SPTech</p>
+  </footer>
+
+  <script src="js/dados.js"></script>
+  <script src="js/jogo.js"></script>
+</body>
+</html>
