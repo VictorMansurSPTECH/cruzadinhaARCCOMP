@@ -14,7 +14,21 @@ Jogo de cruzadinha que roda no navegador para treinar os termos da disciplina de
 6. O botão **Reiniciar** limpa o tabuleiro e recomeça o jogo.
 7. O jogo termina quando você acerta todas as palavras ou quando suas vidas acabam. Na tela final aparecem a quantidade de acertos e o aproveitamento.
 
-## Palavras e pistas
+## Fases
+
+O jogo tem 5 fases, escolhidas pelos botões no topo da página:
+
+1. **Visão geral do processador**: 16 palavras (a cruzadinha principal).
+2. **Memórias**: RAM, ROM, EEPROM, FLASH, CACHE, REGISTRADORES e MEMORIADEMASSA.
+3. **Barramentos e controle**: ADDRESSBUS, DATABUS, DMA, UC, ULA e CPU.
+4. **Processadores**: MICROCONTROLADOR, DUALCORE, QUADCORE, CPU, CACHE, ULA e UC.
+5. **Revisão geral**: 10 palavras misturando todos os temas.
+
+Ao completar uma fase, aparece o botão **Próxima fase**. Se as vidas acabarem, o botão **Tentar de novo** recomeça a mesma fase.
+
+## Palavras e pistas (Fase 1)
+
+As pistas são as mesmas em todas as fases, então a tabela abaixo serve para todas.
 
 | Nº | Direção | Palavra | Pista |
 |----|---------|---------|-------|
@@ -43,7 +57,7 @@ arqcomp-cruzadinha/
 ├── css/
 │   └── style.css    # aparência (paleta SPTech)
 ├── js/
-│   ├── dados.js     # palavras, pistas e posições no tabuleiro
+│   ├── dados.js     # fases, palavras, pistas e posições no tabuleiro
 │   └── jogo.js      # lógica: tabuleiro, validação, vidas e tela final
 └── README.md
 ```
@@ -51,3 +65,23 @@ arqcomp-cruzadinha/
 ## Tecnologias
 
 HTML, CSS e JavaScript puros, sem bibliotecas externas.
+
+## Diário de prompts
+
+Registro resumido das solicitações feitas durante o desenvolvimento do jogo, com o que foi feito em cada uma.
+
+| # | Prompt (resumo) | O que foi feito |
+|---|-----------------|-----------------|
+| 1 | Criar uma cruzadinha no navegador sobre Arquitetura Computacional, com dicas, estrutura de pastas para JS e CSS, boas práticas, uso só do que o aluno domina, README, paleta SPTech, cabeçalho, corpo, painel de dicas com botões anterior/próxima, validação por arraste com pop-up vermelho, contador de vidas e tela final com acertos e aproveitamento. | Primeira versão do jogo: `index.html`, `css/style.css`, `js/dados.js`, `js/jogo.js` e `README.md`, com as 16 palavras do documento orientador. |
+| 2 | Reenvio do mesmo pedido, com novos arquivos anexados. | Mantida a versão anterior, sem alterações. |
+| 3 | "Refaça a estrutura e deixe tudo em uma única pasta." | Arquivos reunidos na raiz de `arqcomp-cruzadinha/`. |
+| 4 | "O que tem em arqcomp cruzadinha?" | Descrição dos arquivos da pasta. |
+| 5 | "Não deixe em arquivo zip." | Removido o zip; arquivos soltos. |
+| 6 | "Agrupe do jeito que você estava fazendo, mas sem pasta compactada." | Restaurada a estrutura com `css/` e `js/`, sem zip. |
+| 7 | "Refaça o código." | `js/jogo.js` reescrito de forma mais limpa, com funções auxiliares e a mesma lógica. |
+| 8 | "Agora compacte tudo em uma única pasta zip." | Gerado `arqcomp-cruzadinha.zip`. |
+| 9 | Envio do projeto em zip (com histórico Git) e pedido para atuar como desenvolvedor de jogos de cruzadinha, criar de 4 a 5 fases com o conteúdo da conversa, deixar tudo em português e entregar em zip. | Criadas 5 fases (visão geral, memórias, barramentos e controle, processadores e revisão geral), com menu para escolher a fase, botão de próxima fase e de tentar de novo. Tabuleiros gerados e validados automaticamente. |
+| 10 | "Não entregue um arquivo zip; entregue cada arquivo separado que você modificou." | Arquivos modificados entregues separadamente. |
+| 11 | "Me mostre os códigos." | Exibição do código dos arquivos. |
+| 12 | "Melhor me traga o arquivo .zip." | Gerado novamente `arqcomp-cruzadinha.zip`, com `css/` e `js/`. |
+| 13 | Criar um diário de prompts de toda a conversa para colocar no README. | Esta seção. |

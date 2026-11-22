@@ -17,8 +17,17 @@ var el = {
   telaFim: document.getElementById("tela-fim"),
   fimTitulo: document.getElementById("fim-titulo"),
   fimAcertos: document.getElementById("fim-acertos"),
-  fimAproveitamento: document.getElementById("fim-aproveitamento")
+  fimAproveitamento: document.getElementById("fim-aproveitamento"),
+  btnProximaFase: document.getElementById("btn-proxima-fase"),
+  nomeFase: document.getElementById("nome-fase"),
+  menuFases: document.getElementById("menu-fases")
 };
+
+// ----- Fase atual (preenchida por iniciarFase) -----
+var faseAtual = 0;
+var PALAVRAS = [];
+var TOTAL_LINHAS = 0;
+var TOTAL_COLUNAS = 0;
 
 // ----- Estado do jogo -----
 var celulas = [];        // celulas[linha][coluna] = input, ou null se a casa não tem letra
@@ -365,26 +374,64 @@ function conferir() {
   }
 }
 
-// ----- Botão Reiniciar -----
+// ----- Botão Reiniciar (recomeça a fase atual) -----
 function reiniciar() {
+  iniciarFase(faseAtual);
+}
+
+// ----- Carrega uma fase e prepara tudo -----
+function iniciarFase(indice) {
+  faseAtual = indice;
+  PALAVRAS = FASES[indice].palavras;
+  TOTAL_LINHAS = FASES[indice].linhas;
+  TOTAL_COLUNAS = FASES[indice].colunas;
+
+  estado = [];
   for (var i = 0; i < PALAVRAS.length; i++) {
     estado[i] = false;
-  }
-  for (var l = 0; l < TOTAL_LINHAS; l++) {
-    for (var c = 0; c < TOTAL_COLUNAS; c++) {
-      if (celulas[l][c] !== null) {
-        celulas[l][c].value = "";
-      }
-    }
   }
   erradas = {};
   vidas = VIDAS_INICIAIS;
   indiceDica = 0;
   encerrado = false;
+  inicioArrasto = null;
   el.resultado.textContent = "";
   el.telaFim.classList.add("oculto");
+  el.nomeFase.textContent = "Fase " + (indice + 1) + " de " + FASES.length + ": " + FASES[indice].nome;
+
+  numerarPalavras();
+  montarTabuleiro();
+  montarListas();
+  montarMenu();
   mostrarDica();
   atualizar();
+}
+
+// ----- Menu de fases -----
+function montarMenu() {
+  el.menuFases.innerHTML = "";
+  for (var f = 0; f < FASES.length; f++) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "botao botao-fase";
+    if (f === faseAtual) {
+      b.classList.add("ativa");
+    }
+    b.textContent = "Fase " + (f + 1);
+    b.setAttribute("data-fase", f);
+    b.addEventListener("click", aoEscolherFase);
+    el.menuFases.appendChild(b);
+  }
+}
+
+function aoEscolherFase(evento) {
+  iniciarFase(Number(evento.currentTarget.getAttribute("data-fase")));
+}
+
+function proximaFase() {
+  if (faseAtual + 1 < FASES.length) {
+    iniciarFase(faseAtual + 1);
+  }
 }
 
 // ----- Placar e pintura juntos -----
@@ -473,9 +520,16 @@ function finalizar(venceu) {
   var acertos = contarAcertos();
   var aproveitamento = Math.round((acertos / PALAVRAS.length) * 100);
   if (venceu) {
-    el.fimTitulo.textContent = "Parabéns, você completou a cruzadinha!";
+    if (faseAtual + 1 < FASES.length) {
+      el.fimTitulo.textContent = "Parabéns, você completou a fase " + (faseAtual + 1) + "!";
+      el.btnProximaFase.classList.remove("oculto");
+    } else {
+      el.fimTitulo.textContent = "Parabéns, você zerou todas as fases!";
+      el.btnProximaFase.classList.add("oculto");
+    }
   } else {
     el.fimTitulo.textContent = "Fim de jogo, suas vidas acabaram.";
+    el.btnProximaFase.classList.add("oculto");
   }
   el.fimAcertos.textContent = "Acertos: " + acertos + " de " + PALAVRAS.length + " palavras";
   el.fimAproveitamento.textContent = "Aproveitamento: " + aproveitamento + "%";
@@ -488,18 +542,12 @@ document.getElementById("btn-proxima").addEventListener("click", dicaProxima);
 document.getElementById("btn-conferir").addEventListener("click", conferir);
 document.getElementById("btn-reiniciar").addEventListener("click", reiniciar);
 document.getElementById("btn-jogar-novamente").addEventListener("click", reiniciar);
+el.btnProximaFase.addEventListener("click", proximaFase);
 
 // soltar o mouse fora de uma casa cancela o arraste
 document.addEventListener("mouseup", function () {
   inicioArrasto = null;
 });
 
-// ----- Início -----
-for (var i = 0; i < PALAVRAS.length; i++) {
-  estado[i] = false;
-}
-numerarPalavras();
-montarTabuleiro();
-montarListas();
-atualizar();
-mostrarDica();
+// ----- Início: começa na fase 1 -----
+iniciarFase(0);

@@ -348,3 +348,30 @@ body {
     font-size: 16px;
   }
 }
+
+/* ----- Menu de fases ----- */
+.menu-fases {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.botao-fase {
+  background-color: #FFFFFF;
+  color: #1F2A4D;
+  border: 2px solid #5BC0D8;
+}
+
+.botao-fase.ativa {
+  background-color: #5BC0D8;
+  color: #1F2A4D;
+}
+
+.nome-fase {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #F9B92C;
+}
